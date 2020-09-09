@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 using System.Linq;
-using static Maze.Core.Models.Helpers;
+using System.Collections.Generic;
 using Maze.Core.Services;
+using static Maze.Core.Models.Helpers;
 
 namespace Maze.Core.Objects
 {
@@ -13,7 +13,6 @@ namespace Maze.Core.Objects
         public int Width { get; set; }
         public int Height { get; set; }
         private List<Coordinates> history;
-
         public Board(int width, int height)
         {
             Width = width;

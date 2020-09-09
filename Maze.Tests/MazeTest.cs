@@ -1,6 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Maze.Core.Objects;
 using System.Collections.Generic;
+using Maze.Core.Objects;
 using static Maze.Core.Models.Helpers;
 
 namespace Maze.Tests

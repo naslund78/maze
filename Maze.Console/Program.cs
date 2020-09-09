@@ -1,10 +1,10 @@
-﻿using Maze.Core.Objects;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
+using System.Collections.Generic;
 using Maze.Core.Models;
-using static Maze.Core.Models.Helpers;
+using Maze.Core.Objects;
 using Maze.Core.Services;
+using static Maze.Core.Models.Helpers;
 using static Maze.Core.Services.LoggingService;
 
 namespace Maze.Console
@@ -45,7 +45,7 @@ namespace Maze.Console
                     var coordinates = mazeDefinitionConverter.GetLaserCoordinates(lines);
 
                     // Display results
-                    System.Console.WriteLine("Laser will exit at {0},{1} going {2}", coordinates.X, coordinates.Y, coordinates.OutDirection.ToString());
+                    System.Console.WriteLine("Laser will exit at {0},{1} going {2}.", coordinates.X, coordinates.Y, coordinates.OutDirection.ToString().ToLower());
                     System.Console.WriteLine("");
                 }
                 catch (Exception ex)
