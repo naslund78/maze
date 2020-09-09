@@ -20,7 +20,7 @@ namespace Maze.Console
             while (true)
             {
                 // Get user input
-                System.Console.WriteLine("Enter the path of the definition file. Type 'sample.txt' to run the sample or 'exit'.  Add -l to log path.");
+                System.Console.WriteLine("Enter the path of the definition file. Type 'sample.txt' to run the sample or 'exit'.  Add ' -l' as an argument to enable coordinate logging.");
                 string input = System.Console.ReadLine();
 
                 // Set up logging
@@ -35,7 +35,6 @@ namespace Maze.Console
                 // Exit if that is what the user typed
                 if (input == "exit")
                     break;
-
                 try
                 {
                     // Read definition file
@@ -56,6 +55,5 @@ namespace Maze.Console
                 }
             }
         }
-      
     }
 }
