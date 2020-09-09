@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using static Maze.Core.Models.Helpers;
+using Maze.Core.Services;
 
 namespace Maze.Core.Objects
 {
@@ -33,12 +34,11 @@ namespace Maze.Core.Objects
             Rooms[x, y].Mirror = mirror;
         }
 
-        public Coordinates ShootLaser_GetExitCoordinates(int X, int Y, Directions direction)
+        public Coordinates ShootLaser_GetExitCoordinates(int X, int Y, Directions direction, LoggingService loggingService)
         {
-            bool exit = false;
             Coordinates coordinates = null;
             Room currentRoom;
-            while (!exit)
+            while (true)
             {
                 // Calculate our coordinates
                 currentRoom = Rooms[X, Y];
@@ -65,11 +65,14 @@ namespace Maze.Core.Objects
                 X = coordinates.NextX;
                 Y = coordinates.NextY;
 
+                // Log our coordinates
+                loggingService.LogInfo(X.ToString() + "," + Y.ToString());
+
                 // Check if we have exitted
                 if (X < 0 || X >= Width)
-                    exit = true;
+                    break;
                 if (Y < 0 || Y >= Height)
-                    exit = true;
+                    break;
             }
             return coordinates;
         }

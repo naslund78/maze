@@ -8,6 +8,11 @@ namespace Maze.Core.Services
 {
     public class MazeDefinitionConverter
     {
+        private LoggingService _loggingService;
+        public MazeDefinitionConverter(LoggingService loggingService)
+        {
+            _loggingService = loggingService;
+        }
         #region Public
         public Coordinates GetLaserCoordinates(string[] lines)
         {
@@ -40,7 +45,7 @@ namespace Maze.Core.Services
 
             // Shoot the laser and return coordinates
             var laserInfo = GetLaserEntry(laserLine);
-            return board.ShootLaser_GetExitCoordinates(laserInfo.Item1, laserInfo.Item2, laserInfo.Item3);
+            return board.ShootLaser_GetExitCoordinates(laserInfo.Item1, laserInfo.Item2, laserInfo.Item3, _loggingService);
         }
 
         #endregion

@@ -5,6 +5,7 @@ using System.IO;
 using Maze.Core.Models;
 using static Maze.Core.Models.Helpers;
 using Maze.Core.Services;
+using static Maze.Core.Services.LoggingService;
 
 namespace Maze.Console
 {
@@ -19,8 +20,17 @@ namespace Maze.Console
             while (true)
             {
                 // Get user input
-                System.Console.WriteLine("Enter the path of the definition file. Type 'sample.txt' to run the sample or 'exit'. ");
+                System.Console.WriteLine("Enter the path of the definition file. Type 'sample.txt' to run the sample or 'exit'.  Add -l to log path.");
                 string input = System.Console.ReadLine();
+
+                // Set up logging
+                LogLevel logLevel = LogLevel.None;
+                if (input.Contains("-l"))
+                {
+                    logLevel = LogLevel.Info;
+                    input = input.Replace("-l",string.Empty).Trim();
+                }
+                LoggingService loggingService = new LoggingService(logLevel);
 
                 // Exit if that is what the user typed
                 if (input == "exit")
@@ -32,7 +42,7 @@ namespace Maze.Console
                     string[] lines = File.ReadAllLines(input);
 
                     // Run it through our converter
-                    MazeDefinitionConverter mazeDefinitionConverter = new MazeDefinitionConverter();
+                    MazeDefinitionConverter mazeDefinitionConverter = new MazeDefinitionConverter(loggingService);
                     var coordinates = mazeDefinitionConverter.GetLaserCoordinates(lines);
 
                     // Display results

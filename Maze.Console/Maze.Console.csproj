@@ -14,10 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Sample1.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="Sample.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

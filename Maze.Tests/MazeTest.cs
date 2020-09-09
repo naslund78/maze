@@ -24,7 +24,7 @@ namespace Maze.Tests
             int startX = 1;
             int startY = 0;
             Directions direction = Directions.Up;
-            Coordinates coordinates = board.ShootLaser_GetExitCoordinates(startX, startY, direction);
+            Coordinates coordinates = board.ShootLaser_GetExitCoordinates(startX, startY, direction, new Core.Services.LoggingService(Core.Services.LoggingService.LogLevel.None));
 
             // Validate
             Coordinates expected = new Coordinates(3, 0, Directions.Down);
@@ -49,7 +49,7 @@ namespace Maze.Tests
             int startX = 0;
             int startY = 2;
             Directions direction = Directions.Right;
-            Coordinates coordinates = board.ShootLaser_GetExitCoordinates(startX, startY, direction);
+            Coordinates coordinates = board.ShootLaser_GetExitCoordinates(startX, startY, direction, new Core.Services.LoggingService(Core.Services.LoggingService.LogLevel.None));
 
             // Validate
             Coordinates expected = new Coordinates(3, 0, Directions.Down);
@@ -76,7 +76,7 @@ namespace Maze.Tests
             int startX = 0;
             int startY = 2;
             Directions direction = Directions.Right;
-            Coordinates coordinates = board.ShootLaser_GetExitCoordinates(startX, startY, direction);
+            Coordinates coordinates = board.ShootLaser_GetExitCoordinates(startX, startY, direction, new Core.Services.LoggingService(Core.Services.LoggingService.LogLevel.None));
 
             // Validate
             Coordinates expected = new Coordinates(0, 0, Directions.Left);
@@ -104,7 +104,7 @@ namespace Maze.Tests
             int startX = 0;
             int startY = 2;
             Directions direction = Directions.Right;
-            Coordinates coordinates = board.ShootLaser_GetExitCoordinates(startX, startY, direction);
+            Coordinates coordinates = board.ShootLaser_GetExitCoordinates(startX, startY, direction, new Core.Services.LoggingService(Core.Services.LoggingService.LogLevel.None));
 
             // Validate
             Assert.IsNull(coordinates, "Expecting a loop and the coordinates to be null.");
