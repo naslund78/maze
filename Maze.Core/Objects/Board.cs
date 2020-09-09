@@ -13,10 +13,12 @@ namespace Maze.Core.Objects
         public int Width { get; set; }
         public int Height { get; set; }
         private List<Coordinates> history;
-        public Board(int width, int height)
+        private LoggingService _loggingService;
+        public Board(int width, int height, LoggingService loggingService)
         {
             Width = width;
             Height = height;
+            _loggingService = loggingService;
             Rooms = new Room[width, height];
             for (int x = 0; x < width; x++)
             {
@@ -30,15 +32,24 @@ namespace Maze.Core.Objects
 
         public void AddMirror(Mirror mirror, int x, int y)
         {
+            _loggingService.LogInfo("Adding mirror to " + x.ToString() + "," + y.ToString());
             Rooms[x, y].Mirror = mirror;
         }
 
-        public Coordinates ShootLaser_GetExitCoordinates(int X, int Y, Directions direction, LoggingService loggingService)
+        public Coordinates ShootLaser_GetExitCoordinates(int X, int Y, Directions direction)
         {
             Coordinates coordinates = null;
             Room currentRoom;
+            _loggingService.LogInfo("Laser entering at " + X.ToString() + "," + Y.ToString() + " going " + direction.ToString().ToLower() + ".");
             while (true)
             {
+                // Validate indes
+                if (X >= Height || Y >= Height)
+                {
+                    _loggingService.LogError(" " + X.ToString() + "," + Y.ToString() + " is outside of our board");
+                    return null;
+                }
+
                 // Calculate our coordinates
                 currentRoom = Rooms[X, Y];
                 if (currentRoom.HasMirror)
@@ -54,7 +65,10 @@ namespace Maze.Core.Objects
                             h.OutDirection == coordinates.OutDirection
                         select h;
                 if (qry.Any())
+                {
+                    _loggingService.LogInfo("Laser is in a loop, processing has stopped.");
                     return null;
+                }
 
                 // Track history
                 history.Add(coordinates);
@@ -65,7 +79,9 @@ namespace Maze.Core.Objects
                 Y = coordinates.NextY;
 
                 // Log our coordinates
-                loggingService.LogInfo(X.ToString() + "," + Y.ToString());
+                if (coordinates.InDirection != coordinates.OutDirection)
+                    _loggingService.LogInfo("Laser reflected off mirror, now going " + coordinates.OutDirection.ToString().ToLower() + ".");
+                _loggingService.LogInfo("Laser moving to " + X.ToString() + "," + Y.ToString());
 
                 // Check if we have exitted
                 if (X < 0 || X >= Width)

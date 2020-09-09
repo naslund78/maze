@@ -37,7 +37,8 @@ namespace Maze.Core.Services
 
             // Set up our board
             var boardInfo = GetHeightAndWidth(boardLine);
-            Board board = new Board(boardInfo.Item1, boardInfo.Item2);
+            _loggingService.LogInfo("The board size " + boardInfo.Item1 + " by " + boardInfo.Item2 + ".");
+            Board board = new Board(boardInfo.Item1, boardInfo.Item2, _loggingService);
             
             // Add the mirrors
             foreach (var mirror in GetMirrors(mirrorLines))
@@ -45,7 +46,7 @@ namespace Maze.Core.Services
 
             // Shoot the laser and return coordinates
             var laserInfo = GetLaserEntry(laserLine);
-            return board.ShootLaser_GetExitCoordinates(laserInfo.Item1, laserInfo.Item2, laserInfo.Item3, _loggingService);
+            return board.ShootLaser_GetExitCoordinates(laserInfo.Item1, laserInfo.Item2, laserInfo.Item3);
         }
 
         #endregion

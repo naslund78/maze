@@ -20,17 +20,11 @@ namespace Maze.Console
             while (true)
             {
                 // Get user input
-                System.Console.WriteLine("Enter the path of the definition file. Type 'sample.txt' to run the sample or 'exit'.  Add ' -l' as an argument to enable coordinate logging.");
+                System.Console.WriteLine("Enter the path of the definition file. Type 'sample.txt' to run the sample or 'exit'.");
                 string input = System.Console.ReadLine();
 
                 // Set up logging
-                LogLevel logLevel = LogLevel.None;
-                if (input.Contains("-l"))
-                {
-                    logLevel = LogLevel.Info;
-                    input = input.Replace("-l",string.Empty).Trim();
-                }
-                LoggingService loggingService = new LoggingService(logLevel);
+                LoggingService loggingService = new LoggingService(LogLevel.Info);
 
                 // Exit if that is what the user typed
                 if (input == "exit")
@@ -43,10 +37,19 @@ namespace Maze.Console
                     // Run it through our converter
                     MazeDefinitionConverter mazeDefinitionConverter = new MazeDefinitionConverter(loggingService);
                     var coordinates = mazeDefinitionConverter.GetLaserCoordinates(lines);
+                    if (coordinates == null)
+                    {
+                        System.Console.WriteLine("Laser did not exit.");
+                        System.Console.WriteLine("");
+                    }
+                    else
+                    {
+                        // Display results
+                        System.Console.WriteLine("Laser will exit at {0},{1} going {2}.", coordinates.X, coordinates.Y, coordinates.OutDirection.ToString().ToLower());
+                        System.Console.WriteLine("");
+                    }
 
-                    // Display results
-                    System.Console.WriteLine("Laser will exit at {0},{1} going {2}.", coordinates.X, coordinates.Y, coordinates.OutDirection.ToString().ToLower());
-                    System.Console.WriteLine("");
+    
                 }
                 catch (Exception ex)
                 {

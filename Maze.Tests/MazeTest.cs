@@ -1,6 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using Maze.Core.Objects;
+using Maze.Core.Services;
 using static Maze.Core.Models.Helpers;
 
 namespace Maze.Tests
@@ -14,7 +15,7 @@ namespace Maze.Tests
             // Set up our board
             int height = 5;
             int width = 4;
-            Board board = new Board(width, height);
+            Board board = new Board(width, height, new LoggingService(Core.Services.LoggingService.LogLevel.None));
 
             // Add our mirrors
             board.AddMirror(new Mirror(AngleTypes.Right, false, true), 1, 2);
@@ -24,7 +25,7 @@ namespace Maze.Tests
             int startX = 1;
             int startY = 0;
             Directions direction = Directions.Up;
-            Coordinates coordinates = board.ShootLaser_GetExitCoordinates(startX, startY, direction, new Core.Services.LoggingService(Core.Services.LoggingService.LogLevel.None));
+            Coordinates coordinates = board.ShootLaser_GetExitCoordinates(startX, startY, direction);
 
             // Validate
             Coordinates expected = new Coordinates(3, 0, Directions.Down);
@@ -39,7 +40,7 @@ namespace Maze.Tests
             // Set up our board
             int height = 5;
             int width = 4;
-            Board board = new Board(width, height);
+            Board board = new Board(width, height, new LoggingService(Core.Services.LoggingService.LogLevel.None));
 
             // Add our mirrors
             board.AddMirror(new Mirror(AngleTypes.Right, false, true), 1, 2);
@@ -49,7 +50,7 @@ namespace Maze.Tests
             int startX = 0;
             int startY = 2;
             Directions direction = Directions.Right;
-            Coordinates coordinates = board.ShootLaser_GetExitCoordinates(startX, startY, direction, new Core.Services.LoggingService(Core.Services.LoggingService.LogLevel.None));
+            Coordinates coordinates = board.ShootLaser_GetExitCoordinates(startX, startY, direction);
 
             // Validate
             Coordinates expected = new Coordinates(3, 0, Directions.Down);
@@ -64,7 +65,7 @@ namespace Maze.Tests
             // Set up our board
             int height = 10;
             int width = 10;
-            Board board = new Board(width, height);
+            Board board = new Board(width, height, new LoggingService(Core.Services.LoggingService.LogLevel.None));
 
             // Add our mirrors
             board.AddMirror(new Mirror(AngleTypes.Right, false, true), 1, 2);
@@ -76,7 +77,7 @@ namespace Maze.Tests
             int startX = 0;
             int startY = 2;
             Directions direction = Directions.Right;
-            Coordinates coordinates = board.ShootLaser_GetExitCoordinates(startX, startY, direction, new Core.Services.LoggingService(Core.Services.LoggingService.LogLevel.None));
+            Coordinates coordinates = board.ShootLaser_GetExitCoordinates(startX, startY, direction);
 
             // Validate
             Coordinates expected = new Coordinates(0, 0, Directions.Left);
@@ -92,7 +93,7 @@ namespace Maze.Tests
             // Set up our board
             int height = 10;
             int width = 10;
-            Board board = new Board(width, height);
+            Board board = new Board(width, height, new LoggingService(Core.Services.LoggingService.LogLevel.None));
 
             // Add our mirrors
             board.AddMirror(new Mirror(AngleTypes.Right, false, true), 1, 2);
@@ -104,7 +105,7 @@ namespace Maze.Tests
             int startX = 0;
             int startY = 2;
             Directions direction = Directions.Right;
-            Coordinates coordinates = board.ShootLaser_GetExitCoordinates(startX, startY, direction, new Core.Services.LoggingService(Core.Services.LoggingService.LogLevel.None));
+            Coordinates coordinates = board.ShootLaser_GetExitCoordinates(startX, startY, direction);
 
             // Validate
             Assert.IsNull(coordinates, "Expecting a loop and the coordinates to be null.");
@@ -116,7 +117,7 @@ namespace Maze.Tests
             // Set up our board
             int height = 1000;
             int width = 1000;
-            Board board = new Board(width, height);
+            Board board = new Board(width, height, new LoggingService(Core.Services.LoggingService.LogLevel.None));
 
             // Add our mirrors, loop around outside
             board.AddMirror(new Mirror(AngleTypes.Right, true, true), 0, height-1);
@@ -127,7 +128,7 @@ namespace Maze.Tests
             int startX = 0;
             int startY = 0;
             Directions direction = Directions.Up;
-            Coordinates coordinates = board.ShootLaser_GetExitCoordinates(startX, startY, direction, new Core.Services.LoggingService(Core.Services.LoggingService.LogLevel.None));
+            Coordinates coordinates = board.ShootLaser_GetExitCoordinates(startX, startY, direction);
 
             // Validate
             Coordinates expected = new Coordinates(0, 0, Directions.Left);
